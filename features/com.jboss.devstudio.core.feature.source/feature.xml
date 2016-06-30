@@ -2,13 +2,13 @@
 <feature
       id="com.jboss.devstudio.core.feature.source"
       label="%featureName"
-      version="10.0.0.qualifier"
+      version="10.0.1.qualifier"
       provider-name="%providerName"
       license-feature="org.jboss.tools.foundation.license.feature"
       license-feature-version="0.0.0"
       plugin="com.jboss.devstudio.core">
 
-   <description url="https://access.redhat.com/documentation/en-US/Red_Hat_JBoss_Developer_Studio/">
+   <description url="https://access.redhat.com/documentation/en/red-hat-jboss-developer-studio/">
       %description
    </description>
 

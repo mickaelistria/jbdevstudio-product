@@ -31,8 +31,7 @@ Building _Red Hat JBoss Developer Studio_ requires Java 6 and Maven 3. See [How 
 
 Build product features, site, and installers like this:
 
-    $ cd devstudio/product
-    $ mvn clean install
+    $ mvn clean install -DBUILD_ALIAS=GA
 
 
 ## Install Red Hat JBoss Developer Studio
@@ -44,38 +43,50 @@ After a successful build, three artifacts are produced:
 * an update site (also known as a p2 repository)
 
 
-Installer jar(s) will be produced in installer/target/ and can be installed using 'java -jar jbdevstudio-*.jar'
+Installer jar(s) will be produced in installer/target/ and can be installed using 'java -jar devstudio-*.jar'
 
 Sources zip can be found in results/target/; you can build from the source zip in there by unpacking it, then using the same instructions above.
 
 An unpacked update site, which can be used to perform an initial install or to install updates to a previous installation, can be found in site/target/repository/.
 
-The installer jar can be used as an archived update site. Launch Eclipse or JBoss Developer Studio, then select:
+The installer jar can be used as an archived update site. Launch Eclipse or Red Hat JBoss Developer Studio, then select:
 
-  Help > Install New Software... > Add... > Archive... > Browse for the JBoss Developer Studio installer jar > OK > 
-    Work with: jar:file:/path/to/jbdevstudio-product-*.jar!/ > Install the JBoss Developer Studio feature(s) > 
+  Help > Install New Software... > Add... > Archive... > Browse for the Red Hat JBoss Developer Studio installer jar > OK > 
+    Work with: jar:file:/path/to/devstudio-product-*.jar!/ > Install the Red Hat JBoss Developer Studio feature(s) > 
       Restart when prompted. 
 
 
-Or, to install the "Bring Your Own Eclipse" category or "Core Features" feature into Eclipse (not as an update to an existing JBoss Developer Studio install):
+Or, to install the "Bring Your Own Eclipse" category or "Core Features" feature into Eclipse (not as an update to an existing Red Hat JBoss Developer Studio install):
 
   * Help > Install from the generated site in site/target/repository/ (or the installer jar, as noted above
-  * Select the "JBoss Developer Studio (Core Features)" feature
+  * Select the "Red Hat JBoss Developer Studio (Core Features)" feature
 
 
 ## Update Red Hat JBoss Developer Studio
 
-To update from one version of JBoss Developer Studio on the same stream to another (eg., from JBoss Developer Studio 6.0.0 to 6.0.1 or from 7.0.0 to 7.0.1):
+To update from one version of Red Hat JBoss Developer Studio on the same stream to another (eg., from Red Hat JBoss Developer Studio 6.0.0 to 6.0.1 or from 7.0.0 to 7.0.1):
 
   * Help > Install from the generated site in site/target/repository/ (or the installer jar, as noted above)
   * Uncheck the box for 'Group items by category'
-  * Select the "JBoss Developer Studio (Branded Product)" feature
+  * Select the "Red Hat JBoss Developer Studio (Branded Product)" feature
 
 
 ## Contribute fixes and features
 
 _Red Hat JBoss Developer Studio_ is open source, and we welcome anybody that wants to participate and contribute!
 
-If you want to fix a bug or make any changes, please log an issue in the [JBoss Developer Studio JIRA](https://issues.jboss.org/browse/JBoss Developer Studio) describing the bug or new feature.
+If you want to fix a bug or make any changes, please log an issue in the [Red Hat JBoss Developer Studio JIRA](https://issues.jboss.org/browse/Red Hat JBoss Developer Studio) describing the bug or new feature.
 
 After you are happy with your changes and a full build runs successfully, attach a patch to the JIRA. 
+
+
+## License
+
+Red Hat, Inc. licenses these features and plugins to you under
+certain open source licenses (or aggregations of such licenses), which
+in a particular case may include the Eclipse Public License, the GNU
+Lesser General Public License, and/or certain other open source
+licenses. For precise licensing details, consult the corresponding
+source code, or contact Red Hat, Attn: General Counsel,
+100 East Davie St., Raleigh NC 27601 USA.
+

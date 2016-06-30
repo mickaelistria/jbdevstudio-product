@@ -6,9 +6,9 @@
 				id="description.radio" />
 			<spec>
 				<choice
-					txt="Yes, and have it ready for use in JBoss Developer Studio"
+					txt="Yes, and have it ready for use in Red Hat JBoss Developer Studio"
 					id="radio.label.1" value="jbosseap" set="true"/>
-				<choice txt="No" id="radio.label.2" value="jbds"/>
+				<choice txt="No" id="radio.label.2" value="devstudio"/>
 			</spec>
 		</field>
 	</panel>

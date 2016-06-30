@@ -6,12 +6,12 @@
   <parent>
     <groupId>org.jboss.tools</groupId>
     <artifactId>parent</artifactId>
-    <version>4.4.0.Alpha1-SNAPSHOT</version>
+    <version>4.4.1.Alpha1-SNAPSHOT</version>
   </parent>
   <groupId>com.jboss.devstudio</groupId>
   <artifactId>product</artifactId>
-  <version>10.0.0-SNAPSHOT</version>
-  <name>JBDS - Product, Installers</name>
+  <version>10.0.1-SNAPSHOT</version>
+  <name>devstudio - Product, Installers</name>
   <packaging>pom</packaging>
   <modules>
     <module>plugins</module>
@@ -21,7 +21,7 @@
     <module>installer</module>
     <!-- JBIDE-20158 since results/ is the folder from which we publish, no need to run this unless we're deploying too <module>results</module> -->
   </modules>
-  <!-- Should you want to build one locally, target platform sources are here: https://github.com/jbosstools/jbosstools-target-platforms/tree/4.40.x/ -->
+  <!-- Should you want to build it locally, target platform sources are here: https://github.com/jbosstools/jbosstools-target-platforms/tree/4.60.x/ -->
   <properties>
     <tpc.group>jbdevstudio</tpc.group>
     <!-- Do not hardcode this value, or we'll get GA-named bits when we do CRx maintenance builds. Instead set this flag in the job config for GA builds ONLY
@@ -30,20 +30,21 @@
     <tpc.version>${TARGET_PLATFORM_VERSION_MAXIMUM}</tpc.version>
     <tycho.scmUrl>scm:git:https://github.com/jbdevstudio/jbdevstudio-product.git</tycho.scmUrl>
     <!-- JBDS-2805 used in results/pom.xml to provide link to Central zip -->
-    <central.tpc.version>4.50.0.CR1-SNAPSHOT</central.tpc.version>
-    <JBOSS_CENTRAL_ZIP>https://devstudio.redhat.com/10.0/snapshots/builds/jbosstools-build-sites.aggregate.central-site_${jbosstools_site_stream}/latest/all/repository.zip</JBOSS_CENTRAL_ZIP>
+    <central.tpc.version>4.60.0.Final-SNAPSHOT</central.tpc.version>
+    <JBOSS_CENTRAL_ZIP>https://devstudio.redhat.com/${devstudioReleaseVersion}/snapshots/builds/jbosstools-build-sites.aggregate.central-site_${jbosstools_site_stream}/latest/all/repository.zip</JBOSS_CENTRAL_ZIP>
 
     <!-- jbosstools_site_stream is set in parent pom = 4.4.neon / master -->
     <!-- <jbosstools_site_stream>master</jbosstools_site_stream> -->
-    <jbosstools-site>http://download.jboss.org/jbosstools/updates/nightly/core/${jbosstools_site_stream}/</jbosstools-site>
+    <jbosstools-site>http://download.jboss.org/jbosstools/${eclipseReleaseName}/snapshots/updates/core/${jbosstools_site_stream}/</jbosstools-site>
     <!-- <jbosstools-target-site>http://download.jboss.org/jbosstools/targetplatforms/jbdevstudiotarget/4.40.0.CR1-SNAPSHOT/REPO/</jbosstools-target-site> -->
 
     <!--
-      By default, use EAP 6.1.0.Alpha, which is publically available. This allows JBDS to be build locally w/o needing access to devel.redhat.com
+      By default, use EAP 6.1.0.Alpha, which is publically available. This allows devstudio to be build locally w/o needing access to devel.redhat.com
       To build the EAP bundled installer, use the "eap" profile: `mvn install -Peap`
      -->
     <eapVersion>6.1.0.Alpha</eapVersion>
-    <eapURL>http://download.jboss.org/jbosseap/6/jboss-eap-6.1.0.Alpha/jboss-eap-6.1.0.Alpha.zip</eapURL>
+    <eapFilename>jboss-eap-${eapVersion}.zip</eapFilename>
+    <eapURL>http://download.jboss.org/jbosseap/6/jboss-eap-${eapVersion}/${eapFilename}</eapURL>
     <eapMD5>21ab4c71230ca9fd311c265be24b6505</eapMD5>
     <eapRootFolder>jboss-eap-6.1</eapRootFolder>
     <buildEAPBundle>false</buildEAPBundle>
@@ -87,8 +88,8 @@
                       <requireProperty>
                         <property>BUILD_ALIAS</property>
                         <message>BUILD_ALIAS is missing, it must be specified.</message>
-                        <regex>.*((Alpha|Beta|CR)\d+[a-z]?)|GA</regex>
-                        <regexMessage>The BUILD_ALIAS (${BUILD_ALIAS}) is invalid. Must contain either Alpha, Beta or CR with postfix, or be GA.</regexMessage>
+                        <regex>.*((AM|Alpha|Beta|CR)\d+[a-z]?)|GA</regex>
+                        <regexMessage>The BUILD_ALIAS (${BUILD_ALIAS}) is invalid. Must contain either AM, Alpha, Beta or CR with postfix, or be GA.</regexMessage>
                       </requireProperty>
                     </rules>
                     <fail>true</fail>
@@ -101,17 +102,91 @@
 
   <profiles>
     <!-- 
-      Addendum to "hudson" profile from parent pom. This adds the correct download URL for EAP 6.4.0, which is not a public URL (unlike 6.1.0.Alpha).
+      Addendum to "hudson" profile from parent pom. This adds the correct download URL for EAP 6.4 with CVE-2015-7501 patch, which is not a public URL (unlike 6.1.0.Alpha).
     -->
     <profile>
       <id>hudson</id>
       <properties>
-        <eapVersion>6.4.0</eapVersion>
-        <eapURL>http://download.devel.redhat.com/released/JBEAP-6/6.4.0/jboss-eap-6.4.0.zip</eapURL>
-        <eapMD5>9a5d37631919a111ddf42ceda1a9f0b5</eapMD5>
-        <eapRootFolder>jboss-eap-6.4</eapRootFolder>
+        <eapVersion>7.0.0</eapVersion>
+        <!-- http://download.eng.rdu2.redhat.com/released/JBEAP-7/7.0.0/jboss-eap-7.0.0.zip -->
+        <eapFilename>jboss-eap-${eapVersion}.zip</eapFilename>
+        <eapURL>http://download.devel.redhat.com/released/JBEAP-7/${eapVersion}/${eapFilename}</eapURL>
+        <eapMD5>cd02482daa0398bf5500e1628d28179a</eapMD5>
+        <eapRootFolder>jboss-eap-7.0</eapRootFolder>
         <p2StatsUrl>https://devstudio.redhat.com/usage/installs/${JOB_NAME}/${project.version}/${BUILD_ALIAS}/${buildQualifier}/</p2StatsUrl>
       </properties>
+    </profile>
+
+    <profile>
+      <id>local-sources</id>
+      <properties>
+        <skipBaselineComparison>true</skipBaselineComparison>
+        <mavanagaiata.skip>true</mavanagaiata.skip>
+      </properties>
+      <build>
+        <plugins>
+          <!-- disable git-based source reference generation in MANIFEST.MF -->
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-packaging-plugin</artifactId>
+            <version>${tychoVersion}</version>
+            <configuration>
+              <sourceReferences>
+                <generate>false</generate>
+              </sourceReferences>
+            </configuration>
+          </plugin>
+
+          <!-- disable this from the site/pom.xml -->
+          <plugin>
+            <groupId>pl.project13.maven</groupId>
+            <artifactId>git-commit-id-plugin</artifactId>
+            <version>2.1.13</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>revision</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+
+	  <!-- disable fetching sources from manifests and creation of HTML facade on update site -->
+          <plugin>
+            <groupId>org.jboss.tools.tycho-plugins</groupId>
+            <artifactId>repository-utils</artifactId>
+            <version>${jbossTychoPluginsVersion}</version>
+            <executions>
+              <execution>
+                <id>generate-facade</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>generate-repository-facade</goal>
+                </goals>
+                <configuration>
+                  <skip>true</skip>
+                  <skipBuildInfo>true</skipBuildInfo>
+                  <skipWebContentGeneration>true</skipWebContentGeneration>
+                  <fetch-sources-from-manifests.skip>true</fetch-sources-from-manifests.skip>
+                </configuration>
+              </execution>
+              <execution>
+                <id>fetch-sources</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>fetch-sources-from-manifests</goal>
+                </goals>
+                <configuration>
+                  <skip>true</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
 
     <!-- 
@@ -199,7 +274,7 @@ Build product features, site, and installers like this:
 
 To replicate a Jenkins CI build, run like this (unified.target and hudson profile require VPN access):
 
-  mvn clean install -P hudson,eap,pack200 -Dtpc.version=4.60.0.Alpha1-SNAPSHOT -DBUILD_NUMBER=460000 -DJOB_NAME=devstudio.product_master -Dupdate.site.description="Development Milestone" -Djbosstools_site_stream=master
+  mvn clean install -P hudson,eap,pack200 -Dtpc.version=4.60.0.Final-SNAPSHOT -DBUILD_NUMBER=460000 -DJOB_NAME=devstudio.product_master -Dupdate.site.description="Development Milestone" -Djbosstools_site_stream=master -DBUILD_ALIAS=GA
 
 See README.md for information building, installing, contributing, generated artifacts, and more.
 

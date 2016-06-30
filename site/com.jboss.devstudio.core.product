@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="JBoss Developer Studio (Branded Product)" uid="com.jboss.devstudio.core.package" id="com.jboss.devstudio.core.product" application="org.eclipse.ui.ide.workbench" version="10.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="Red Hat JBoss Developer Studio (Branded Product)" uid="com.jboss.devstudio.core.package" id="com.jboss.devstudio.core.product" application="org.eclipse.ui.ide.workbench" version="10.0.1.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <text>
-         Copyright (c) 2004-2015 Red Hat, Inc. and others.
+         Copyright (c) 2004-2016 Red Hat, Inc. and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -31,20 +31,21 @@ platform\:/base/plugins/com.jboss.devstudio.core
 openFile</programArgs>
       <vmArgs>-Xms512m
 -Xmx1024m
+-Dosgi.framework.extensions=org.eclipse.wst.jsdt.nashorn.extension
 -Dosgi.instance.area.default=@user.home/workspace</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
--Xdock:icon=../Resources/JBDevStudio.icns -XX:MaxPermSize=256m -Xdock:name=&quot;JBoss Developer Studio&quot;</vmArgsMac>
+-Xdock:icon=../Resources/devstudio.icns -XX:MaxPermSize=256m -Xdock:name=&quot;Red Hat JBoss Developer Studio&quot;</vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
 
    <splash
       location="com.jboss.devstudio.core" />
-   <launcher name="jbdevstudio">
-      <macosx icon="macosx/JBDevStudio.icns"/>
+   <launcher name="devstudio">
+      <macosx icon="macosx/devstudio.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="jbds.ico"/>
+         <ico path="devstudio.ico"/>
          <bmp/>
       </win>
    </launcher>
@@ -61,6 +62,8 @@ openFile</programArgs>
    <features>
       <feature id="com.jboss.devstudio.core.feature"/>
       <feature id="com.jboss.devstudio.core.capabilities.feature"/>
+      <!-- JBDS-3566 new for Mars.2 / Neon.M4 -->
+      <feature id="org.eclipse.epp.logging.aeri.feature"/>
    </features>
 
    <configurations>
@@ -71,10 +74,11 @@ openFile</programArgs>
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
       <property name="org.eclipse.update.reconcile" value="false" />
+      <property name="eclipse.buildId" value="${unqualifiedVersion}.${buildQualifier}"/>
    </configurations>
 
    <repositories>
-      <repository location="https://devstudio.redhat.com/9.0/stable/updates/" enabled="true" />
+      <repository location="https://devstudio.redhat.com/10.0/stable/updates/" enabled="true" />
    </repositories>
 
 </product>

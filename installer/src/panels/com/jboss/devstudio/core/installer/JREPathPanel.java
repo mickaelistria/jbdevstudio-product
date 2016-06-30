@@ -353,11 +353,18 @@ public class JREPathPanel extends PathInputPanel implements IChangeListener {
 			return -5;
 		}
 
-        if(!detectedVersion.matches("1\\.[1-9]\\.[0-9].*")) {
-        	return -4; // Unknown version
-        }
-        int versionNumber = Integer.parseInt(detectedVersion.substring(2,3)); 
-        
+		if(!detectedVersion.matches("1\\.[1-9]\\.[0-9].*") && !detectedVersion.matches("[1-9]-.*")) {
+			return -4; // Unknown version
+		}
+
+		int versionNumber = 0;
+
+		if (detectedVersion.matches("1\\.[1-9]\\.[0-9].*")) {
+			 versionNumber = Integer.parseInt(detectedVersion.substring(2, 3));
+		} else {
+			versionNumber = 9;
+		}
+
         if (versionNumber < minVersion) {
         	return -3; // Version is less that minimum version
         }
@@ -488,7 +495,7 @@ public class JREPathPanel extends PathInputPanel implements IChangeListener {
     		} else if(status == 0) {
     			parent.unlockNextButton();
        		} else if(status == -2){
-        		messageLabel.setText("<html><p>This JVM was not tested with JBoss Developer Studio.<br>It is not guaranteed to work.</p></html>");
+        		messageLabel.setText("<html><p>This JVM was not tested with Red Hat JBoss Developer Studio.<br>It is not guaranteed to work.</p></html>");
         		parent.unlockNextButton();
         	} else if(status == -1){
         		messageLabel.setText(parent.langpack.getString(getI18nStringForClass("badVersion2", "PathInputPanel")));

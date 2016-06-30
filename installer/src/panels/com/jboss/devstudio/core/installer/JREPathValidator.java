@@ -97,7 +97,7 @@ public class JREPathValidator {
 		} else if (!isPathValid(jvmLocation)) {
 			return ValidationCode.ERR_PATH_IS_NOT_JVM_LOCATION;
 		} else if (jvmLocation.contains(JREPathValidator.JAVA_APPLET_PLUGIN)) {
-				// Prevent running JBDS with JavaAppletPlugin.plugin JVM
+				// Prevent running devstudio with JavaAppletPlugin.plugin JVM
 				return ValidationCode.ERR_PATH_IS_APPLET_PLUGIN_JVM;
 			}
 		return ValidationCode.OK;
@@ -118,11 +118,16 @@ public class JREPathValidator {
 			return ValidationCode.ERR_JVM_VERSION_NOT_FOUND;
 		}
 		// Check detected version format
-		if (!detectedVersion.matches("1\\.[1-9]\\.[0-9].*")) {
+		if (!detectedVersion.matches("1\\.[1-9]\\.[0-9].*") && !detectedVersion.matches("[1-9]-.*")) {
 			// Unknown version
 			return ValidationCode.ERR_JVM_VERSION_NOT_PARSED; 
 		}
-		int versionNumber = Integer.parseInt(detectedVersion.substring(2, 3));
+		int versionNumber = 0;
+		if (detectedVersion.matches("1\\.[1-9]\\.[0-9].*")) {
+			 versionNumber = Integer.parseInt(detectedVersion.substring(2, 3));
+		} else {
+			versionNumber = 9;
+		}
 
 		// check selected JVM version range
 		if (versionNumber < MIN_VERSION) {

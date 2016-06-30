@@ -8,7 +8,7 @@
 		<appversion>
 			@{specification.version}, JBoss AS @{jboss.version}
 		</appversion>
-		<appsubpath>jbdevstudio</appsubpath>
+		<appsubpath>devstudio</appsubpath>
 		<authors>
 			<author name="JBoss by Red Hat" email="sales@jboss.com" />
 		</authors>
@@ -36,7 +36,7 @@
 		<variable name="INSTALL_GROUP" value="@{install.group}"/>
 		<variable name="VERSION" value="@{specification.version.presentstring}"/>
 		<variable name="EAP_VERSION" value="@{eapVersion}"/>
-		<variable name="jboss.logname" value="jbdevstudio-install-"/>
+		<variable name="jboss.logname" value="devstudio.install-"/>
 		<variable name="DESKTOP_SHORTCUT_NAME" 
 			value="JBoss-Developer-Studio-@{version.presentstring}@{nightly_build_qualifier}" />
 	</variables>
@@ -56,8 +56,8 @@
 		<modifier key="langDisplayType" value="native" />
 		<modifier key="useHeadingPanel" value="yes" />
 		<modifier key="headingFontSize" value="1.5" />
-		<modifier key="headingBackgroundColor" value="0x00ffffff" />
-		<modifier key="headingForegroundColor" value="0x005a5a5a" />
+		<modifier key="headingBackgroundColor" value="0x00242424" />
+		<modifier key="headingForegroundColor" value="0x00ffffff" />
 		<modifier key="headingImageBorderSize" value="0" />
 		<modifier key="headingPanelCounter" value="text" />
 		<modifier key="headingPanelCounterPos" value="inHeading" />
@@ -84,15 +84,15 @@
 		<res src="config/resources/unix_shortcut_specification.xml"
 			id="Unix_shortcutSpec.xml" />
 		<res id="JBossAsSelectPanel.create.image"
-			src="config/resources/images/jbeap_new_wiz.png" />
+			src="config/resources/images/runtime_wiz.png" />
 		<res id="JBossAsSelectPanel.edit.image"
- 			src="config/resources/images/jbeap_edit_wiz.png" />			
+ 			src="config/resources/images/runtime_wiz.png" />
 		<res id="Error.image"
 			src="config/resources/images/message_error.png" />
-		<res id="128-jbds_icon.png"
-			src="config/resources/icons/128-jbds_icon.png" />
-		<res id="32-jbds_icon.png"
-			src="config/resources/icons/32-jbds_icon.png" />
+		<res id="128-devstudio.icon.png"
+			src="config/resources/icons/128-devstudio.icon.png" />
+		<res id="32-devstudio.icon.png"
+			src="config/resources/icons/32-devstudio.icon.png" />
 		<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --> 
 		<!-- Licencees in different languages -->	
 		<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --> 
@@ -145,7 +145,7 @@
 		<!-- Do the install -->
 		<panel classname="InstallPanel" id="install" />
 		
-		<!-- This panel creates links folder in Eclipse home directory and creates jbds.link file -->
+		<!-- This panel creates links folder in Eclipse home directory and creates devstudio.link file -->
 		<panel classname="CreateLinkPanel" id="createlink"/>
 		
 		<!-- This panel creates shortcuts -->
@@ -165,7 +165,7 @@
 		<!-- disabled to fix issue with windows	-->
 		<!-- installer on windows vista is not asking 
 				 for privilege lifting which leads to errors 
-				 during addin JBDS installation to the registry-->
+				 while adding devstudio installation to the registry-->
 		<!-- listener installer="RegistryInstallerListener"
 			uninstaller="RegistryUninstallerListener" >
 			<os name="Windows 7"/>
@@ -177,11 +177,15 @@
 	</listeners>
 	
 	<conditions>
-		 <condition type="variable" id="jbeap-selected">
-				<name>INSTALL_GROUP</name>
-				<value>jbosseap</value>
-		 </condition>
+		<condition type="variable" id="jbeap-selected">
+			<name>INSTALL_GROUP</name>
+			<value>jbosseap</value>
+		</condition>
 	</conditions>
+
+	<installerrequirements>
+		<installerrequirement condition="izpack.windowsinstall|izpack.macinstall|izpack.linuxinstall" message="&lt;html&gt;&lt;p&gt;This installer contains Red Hat JBoss Developer Studio&lt;br&gt;for Winodws, Mac OS X and Linux operating systems.&lt;br&gt;Current operating system is not supported.&lt;/p&gt;&lt;/html&gt;"/>
+	</installerrequirements>
 
 	<packs>
 		<refpack file="config/install-pack-installer.xml" />
@@ -191,5 +195,5 @@
 	<jar src="../../tools/lib/ant.jar" />
 	<jar src="../../tools/lib/ant-launcher.jar" />
 	<jar src="../../tools/lib/gson-2.3.1.jar" />
-	<jar src="@{artifacts.jbds.update}" />
+	<jar src="@{artifacts.devstudio.update}" />
 </installation>

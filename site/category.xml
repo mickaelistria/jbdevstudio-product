@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <description>JBoss Developer Studio 10 Updates - Core</description>
+  <description>Red Hat JBoss Developer Studio 10 Updates - Core</description>
 
   <!-- PLEASE NOTE!
     When updating this file, please be sure that it parses as valid XML before committing it.
@@ -11,7 +11,7 @@
     <category name="CoreTools" />
     <category name="WebTools" />
   </feature>
-  <!-- JBIDE-18869 add Thym to JBT/JBDS directly -->
+  <!-- JBIDE-18869 add Thym to JBT/devstudio directly -->
   <feature id="org.eclipse.thym.feature">
     <category name="AdditionalTools" />
     <category name="MobileTools"/>
@@ -28,7 +28,7 @@
     <category name="AdditionalTools" />
     <category name="MobileTools"/>
   </feature>
-  <!-- JBDS-3079 move to Central TP 
+  <!-- JBDS-3079 move to Central TP for devstudio only (?)
   <feature id="org.jboss.tools.cordovasim.feature">
     <category name="AdditionalTools" />
     <category name="MobileTools"/>
@@ -38,6 +38,22 @@
     <category name="CoreTools" />
     <category name="WebTools" />
     <category name="MobileTools"/>
+  </feature>
+
+  <!-- JBIDE-21377 -->
+  <bundle id="org.dadacoalition.yedit">
+    <category name="CoreTools" />
+  </bundle>
+  <bundle id="org.yaml.snakeyaml"/>
+
+  <!-- JBDS-3898 JSON editor -->
+  <feature id="org.eclipse.wst.json_core.feature">
+    <category name="CoreTools" />
+    <category name="WebTools" />
+  </feature>
+  <feature id="org.eclipse.wst.json_ui.feature">
+    <category name="CoreTools" />
+    <category name="WebTools" />
   </feature>
 
   <!-- JBIDE-19045 include Tern -->
@@ -53,16 +69,28 @@
     <category name="CoreTools" />
     <category name="WebTools" />
   </feature>
-  <feature id="org.jboss.tools.jst.js.feature">
-    <category name="WebTools" />
-    <category name="MobileTools"/>
-  </feature>
   <feature id="org.jboss.tools.jst.jsdt.feature">
-    <!-- removed from JBDS CoreTools but still there for JBT -->
+    <!-- removed from devstudio CoreTools but still there for JBT -->
+    <category name="GeneralTools" />
     <category name="WebTools" />
     <category name="MobileTools"/>
   </feature>
-  <!-- not in JBDS yet 
+  <!-- JBDS-3899 JSDT and chromium.debug features -->
+  <feature id="org.eclipse.wst.jsdt.chromium.debug.feature">
+    <category name="CoreTools" />
+    <category name="WebTools" />
+    <category name="MobileTools"/>
+  </feature>
+  <feature id="org.eclipse.wst.jsdt.feature">
+    <category name="CoreTools" />
+    <category name="WebTools" />
+    <category name="MobileTools"/>
+  </feature>
+  <feature id="org.eclipse.wst.jsdt.nodejs.feature">
+    <category name="WebTools" />
+    <category name="MobileTools"/>
+  </feature>
+  <!-- not in devstudio yet 
   <feature id="org.jboss.tools.jst.angularjs.feature" >
     <category name="CoreTools" />
     <category name="WebTools" />
@@ -77,7 +105,7 @@
     <category name="WebTools" />
   </feature>
   <feature id="org.jboss.tools.seam.feature">
-    <!-- removed from JBDS & JBT CoreTools -->
+    <!-- removed from devstudio & JBT CoreTools -->
     <category name="WebTools" />
   </feature>
   <feature id="org.jboss.tools.batch.feature">
@@ -110,16 +138,20 @@
   </feature>
   <feature id="org.jboss.tools.openshift.express.feature">
     <category name="CoreTools" />
-    <category name="CloudTools" />
+    <category name="CloudContainerTools" />
   </feature>
   <feature id="org.jboss.tools.openshift.egit.integration.feature">
     <category name="CoreTools" />
-    <category name="CloudTools" />
+    <category name="CloudContainerTools" />
   </feature>
   <!-- openshift v3 -->
   <feature id="org.jboss.tools.openshift.feature">
-    <!-- JBDS-3511 OS v3 support is Tech Preview now; remove from default install <category name="CoreTools" /> -->
-    <category name="CloudTools" />
+    <category name="CoreTools" />
+    <category name="CloudContainerTools" />
+  </feature>
+  <feature id="org.jboss.tools.openshift.cdk.feature">
+    <category name="CoreTools" />
+    <category name="CloudContainerTools" />
   </feature>
   <feature id="org.jboss.ide.eclipse.archives.feature">
     <category name="CoreTools" />
@@ -148,7 +180,7 @@
     <category name="WebTools" />
   </feature>
   <feature id="org.jboss.tools.portlet.feature">
-    <!-- removed from JBDS & JBT CoreTools -->
+    <!-- removed from devstudio & JBT CoreTools -->
     <category name="WebTools" />
   </feature>
   <feature id="org.jboss.tools.forge.feature">
@@ -243,6 +275,11 @@
     <category name="CoreTools" />
   </bundle>
 
+  <!-- JBIDE-22196 add recomenders snippets -->
+  <feature id="org.eclipse.recommenders.snipmatch.rcp.feature">
+    <category name="CoreTools" />
+  </feature>
+
   <!-- include but do not categorize -->
   <feature id="org.jboss.tools.central.feature"/>
   <feature id="org.jboss.tools.common.feature"/>
@@ -263,10 +300,6 @@
     <category name="WebTools" />
     <category name="GeneralTools"/>
   </feature>
-  <feature id="org.jboss.tools.birt.feature">
-    <category name="AdditionalTools" />
-    <category name="ReportTools" />
-  </feature>
   <feature id="org.jboss.tools.central.themes.feature">
     <category name="AdditionalTools" />
   </feature>
@@ -278,25 +311,41 @@
     <category name="CoreTools" />
     <category name="GeneralTools" />
   </feature>
+
   <feature id="org.jboss.tools.forge.ext.feature">
-    --><!-- JBIDE-13691 don't put in CoreTools category yet <category name="CoreTools"/> --><!--
-    <category name="AdditionalTools" />
+    <category name="CoreTools" />
     <category name="WebTools"/>
   </feature>
   <feature id="org.jboss.tools.forge.m2e.feature">
     <category name="CoreTools" />
     <category name="MavenTools"/>
   </feature>
-  -->
+  
+  <feature id="org.jboss.tools.wtp.server.launchbar.feature">
+    <category name="WebTools" />
+  </feature>
+-->
 
-  <!-- categorized in JBT; uncategorized in JBDS -->
+  <feature id="org.eclipse.linuxtools.docker.feature">
+    <category name="CoreTools" />
+    <category name="CloudContainerTools"/>
+  </feature>
+  <bundle id="com.spotify.docker.client"/>
+  <bundle id="org.eclipse.linuxtools.docker.core"/>
+  <bundle id="org.eclipse.linuxtools.docker.ui"/>
+  <bundle id="org.eclipse.linuxtools.docker.docs"/>
+  <feature id="org.eclipse.linuxtools.vagrant.feature">
+    <category name="CloudContainerTools"/>
+  </feature>
+
+  <!-- categorized in JBT; uncategorized in devstudio -->
   <!-- JBDS-3079 move to Central TP 
   <feature id="org.jboss.tools.maven.jbosspackaging.feature"/>
   <feature id="org.jboss.tools.common.mylyn.feature"/>
   -->
   <feature id="org.jboss.tools.usage.feature"/>
 
-  <!-- only in JBDS -->
+  <!-- only in devstudio -->
   <feature id="com.jboss.devstudio.core.feature" patch="false">
     <category name="BringYourOwnEclipse" />
     <category name="CoreTools" />
@@ -327,7 +376,7 @@
   <feature id="org.jboss.tools.browsersim.feature.source"/>
   <feature id="org.jboss.tools.jst.feature.source"/>
   <feature id="org.jboss.tools.jst.jsdt.feature.source"/>
-  <!-- not in JBDS yet <feature id="org.jboss.tools.jst.angularjs.feature.source"/> -->
+  <!-- not in devstudio yet <feature id="org.jboss.tools.jst.angularjs.feature.source"/> -->
   <feature id="org.jboss.tools.vpe.feature.source"/>
   <feature id="org.jboss.tools.jsf.feature.source"/>
   <feature id="org.jboss.tools.xulrunner.feature.source"/>
@@ -377,19 +426,21 @@
   <feature id="org.jboss.tools.common.verification.feature.source"/>
   <!-- JBDS-3079 remove <feature id="org.jboss.tools.maven.jbosspackaging.feature.source"/> -->
   <feature id="org.jboss.tools.wtp.runtimes.tomcat.feature.source"/>
+  <!-- not in devstudio yet <feature id="org.jboss.tools.wtp.server.launchbar.feature.source"/> -->
 
   <bundle id="org.jboss.tools.discovery.core.source"/>
+  <!-- not in devstudio yet? <bundle id="org.jboss.tools.foundation.help.ui.source"/> -->
 
   <!-- only in JBT
   <feature id="org.jboss.tools.arquillian.feature.source"/>
   <feature id="org.jboss.tools.central.themes.feature.source"/>
   <feature id="org.jboss.tools.community.central.feature.source"/>
   <feature id="org.jboss.tools.community.project.examples.feature.source"/>
-  <feature id="org.jboss.tools.birt.feature.source"/>
   <feature id="org.jboss.tools.forge.ext.feature.source"/>
+  <feature id="org.jboss.tools.forge.m2e.feature.source"/>
   -->
 
-  <!-- only in JBDS -->
+  <!-- only in devstudio -->
   <feature id="com.jboss.devstudio.core.feature.source" patch="false"/>
   <feature id="com.jboss.devstudio.core.capabilities.feature.source" patch="false"/>
 
@@ -398,28 +449,24 @@
   <!-- ########## -->
 
   <!-- only in JBT
-  <category-def label="JBoss Application Server Adapters" name="org.eclipse.wst.server.core.serverAdapter">
-  </category-def>
+  <category-def label="JBoss Application Server Adapters" name="org.eclipse.wst.server.core.serverAdapter"/>
   <category-def name="CoreTools" label="* Abridged JBoss Tools">
     <description>Contains most of the JBoss Tools features. Excluded are those related to integration with 3rd party plugins. Selecting this category will give you all tools needed for Web and Seam Development.</description>
   </category-def>
   <category-def name="AdditionalTools" label="* Additional JBoss Tools">
     <description>Contains the rest of the JBoss Tools features, not included in Abridged JBoss Tools category. This category includes miscellaneous, new, experimental and incubating features. See individual feature descriptions for details.</description>
   </category-def>
-  <category-def name="ReportTools" label="JBoss Business Intelligence, Reporting and Charting">
-    <description>Business Intelligence, Reporting and Charting. Use these if you plan to integrate Hibernate or Seam with Eclipse BIRT.</description>
-  </category-def>
   -->
 
-  <!-- only in JBDS -->
-  <category-def name="BringYourOwnEclipse" label="* JBoss Developer Studio 10 - Bring Your Own Eclipse">
-    <description>Select this feature if you want to install all of the JBoss Developer Studio (Core Features) into your own Eclipse 4.6 (Neon).</description>
+  <!-- only in devstudio -->
+  <category-def name="BringYourOwnEclipse" label="* Red Hat JBoss Developer Studio 10 - Bring Your Own Eclipse">
+    <description>Select this feature if you want to install all of the Red Hat JBoss Developer Studio (Core Features) into your own Eclipse 4.6 (Neon).</description>
   </category-def>
-  <category-def name="CoreTools" label="* JBoss Developer Studio 10 - Core">
-    <description>Contains most of the JBoss Developer Studio features. Excluded are those related to integration with 3rd party plugins. Selecting this category will give you all tools needed for Web Development.</description>
+  <category-def name="CoreTools" label="* Red Hat JBoss Developer Studio 10 - Core">
+    <description>Contains most of the Red Hat JBoss Developer Studio features. Excluded are those related to integration with 3rd party plugins. Selecting this category will give you all tools needed for Web Development.</description>
   </category-def>
-  <category-def name="AdditionalTools" label="* JBoss Developer Studio 10 - Extras">
-    <description>Contains the rest of the JBoss Developer Studio features, not included in Core category. This category includes miscellaneous, new, experimental and incubating features. See individual feature descriptions for details.</description>
+  <category-def name="AdditionalTools" label="* Red Hat JBoss Developer Studio 10 - Extras">
+    <description>Contains the rest of the Red Hat JBoss Developer Studio features, not included in Core category. This category includes miscellaneous, new, experimental and incubating features. See individual feature descriptions for details.</description>
   </category-def>
   
   <category-def name="WebTools" label="JBoss Web and Java EE Development">
@@ -441,7 +488,7 @@
   <category-def name="MavenTools" label="JBoss Maven Support">
     <description>Plugins related to Maven and m2eclipse support. Use these to enable use of Maven.</description>
   </category-def>
-  <category-def name="CloudTools" label="JBoss Cloud Development Tools">
-    <description>Tools for Cloud Development.</description>
+  <category-def name="CloudContainerTools" label="JBoss Cloud And Container Development Tools">
+    <description>Tools for Cloud and Container Development.</description>
   </category-def>
 </site>

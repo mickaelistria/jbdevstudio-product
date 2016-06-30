@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.jboss.devstudio</groupId>
 		<artifactId>product</artifactId>
-		<version>10.0.0-SNAPSHOT</version>
+		<version>10.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>com.jboss.devstudio.core</groupId>
 	<artifactId>com.jboss.devstudio.core.site</artifactId>
@@ -13,9 +13,9 @@
 
 	<properties>
 		<update.site.name>Red Hat JBoss Developer Studio</update.site.name>
-		<update.site.description>Nightly Build</update.site.description>
+		<update.site.description>Snapshot Build</update.site.description>
 		<siteTemplateFolder>siteTemplateFolder</siteTemplateFolder>
-		<associateSite>https://devstudio.redhat.com/10.0/stable/updates/</associateSite>
+		<associateSite>https://devstudio.redhat.com/${devstudioReleaseVersion}/stable/updates/</associateSite>
 	</properties>
 
 	<build>
@@ -103,14 +103,14 @@
 							<!-- <zipCacheFolder>${basedir}/cache</zipCacheFolder> -->
 							<!-- <outputFolder>${project.build.directory}/fullSite</outputFolder> -->
 							<!-- <fallbackToChild>latest/all/repo</fallbackToChild> -->
-							<sourcesZip>${project.build.directory}/jboss-devstudio-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${BUILD_ALIAS}-src.zip</sourcesZip>
-							<sourcesZipRootFolder>jboss-devstudio-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${BUILD_ALIAS}-src</sourcesZipRootFolder>
+							<sourcesZip>${project.build.directory}/devstudio-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${BUILD_ALIAS}-src.zip</sourcesZip>
+							<sourcesZipRootFolder>devstudio-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${BUILD_ALIAS}-src</sourcesZipRootFolder>
 							<sourceFetchMap>
 								<!-- pick a plugin available in the project's update site from which we can deduce the Eclipse-SourceReference -->
 								<jbosstools-base>org.jboss.tools.common</jbosstools-base>
 								<jbosstools-aerogear>org.jboss.tools.aerogear.thym</jbosstools-aerogear>
-								<!-- only in JBT, not in JBDS <jbosstools-arquillian>org.jboss.tools.arquillian.core</jbosstools-arquillian> -->
-								<!-- only in JBT, not in JBDS <jbosstools-birt>org.jboss.tools.birt.core</jbosstools-birt> -->
+								<!-- only in JBT, not in devstudio <jbosstools-arquillian>org.jboss.tools.arquillian.core</jbosstools-arquillian> -->
+								<!-- only in JBT, not in devstudio <jbosstools-birt>org.jboss.tools.birt.core</jbosstools-birt> -->
 								<jbosstools-browsersim>org.jboss.tools.browsersim.eclipse</jbosstools-browsersim>
 								<jbosstools-central>org.jboss.tools.central</jbosstools-central>
 								<jbosstools-forge>org.jboss.tools.forge.core</jbosstools-forge>
@@ -131,6 +131,73 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-p2-extras-plugin</artifactId>
+				<version>${tychoExtrasVersion}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>mirror</goal>
+						</goals>
+						<configuration>
+							<source>
+								<repository>
+									<url>file://${project.build.directory}/repository</url>
+									<layout>p2</layout>
+								</repository>
+							</source>
+							<destination>${project.build.directory}/repository-nopackgz</destination>
+							<includePacked>false</includePacked>
+							<name>Red Hat JBoss Developer Studio Update Site Zip</name>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven.antrun.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>zip-repository-nopackgz</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<quiet>true</quiet>
+							<tasks>
+								<echo>Replace zip: ${project.build.directory}/${project.artifactId}-${project.version}.zip</echo>
+								<!-- TODO in 10.0: use devstudio-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${BUILD_ALIAS}-updatesite-core.zip -->
+								<mkdir dir="${project.build.directory}/repository/web"/>
+								<zip destfile="${project.build.directory}/${project.artifactId}-${project.version}.zip" whenempty="fail">
+									<zipfileset dir="${project.build.directory}/repository/web" includes="site.css" prefix="web"/>
+									<zipfileset dir="${project.build.directory}/repository" includes="buildinfo.json, index.html, site.properties, category.xml" prefix=""/>
+									<zipfileset dir="${project.build.directory}/repository-nopackgz" prefix=""/>
+								</zip>
+								<!-- cleanup mirror -->
+								<delete dir="${project.build.directory}/repository-nopackgz" quiet="true" failonerror="false"/>
+
+								<!-- JBDS-3598 add CSP src zip readme into src zip too -->
+								<copy todir="${project.build.directory}" overwrite="true">
+									<fileset file="${project.basedir}/../results/customer-portal/src.manual-instructions.txt" />
+									<mapper type="merge" to="README.how-to-build-from-sources-zip.txt" />
+									<filterchain>
+										<expandproperties />
+									</filterchain>
+								</copy>
+								<zip destfile="${project.build.directory}/devstudio-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${BUILD_ALIAS}-src.zip" whenempty="fail" update="true">
+									<zipfileset dir="${project.build.directory}/" includes="README.how-to-build-from-sources-zip.txt"/>
+								</zip>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-publisher-plugin</artifactId>
@@ -157,7 +224,7 @@
 							<id>com.jboss.devstudio.core.package</id>
 						</product>
 						<rootFolders>
-							<macosx>jbdevstudio.app</macosx>
+							<macosx>devstudio.app</macosx>
 						</rootFolders>
 					</products>
 				</configuration>

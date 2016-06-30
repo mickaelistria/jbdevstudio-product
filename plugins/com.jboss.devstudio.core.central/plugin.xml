@@ -4,8 +4,8 @@
 	<extension
          point="org.jboss.tools.central.configurators">
       <configurator
-            class="com.jboss.devstudio.core.central.JbdsConfigurator"
-            id="com.jboss.devstudio.core.central.jbdsConfigurator">
+            class="com.jboss.devstudio.core.central.Configurator"
+            id="com.jboss.devstudio.core.central.devstudioConfigurator">
       </configurator>
    </extension>
    
@@ -13,7 +13,7 @@
          point="org.eclipse.ui.commands">
       <command
       		defaultHandler="com.jboss.devstudio.core.central.actions.OpenDevstudioHomeHandler"
-            name="JBoss Developer Studio Home"
+            name="Red Hat JBoss Developer Studio Home"
             id="com.jboss.devstudio.core.central.openDevstudioHome">
       </command>
          
@@ -23,7 +23,7 @@
          point="org.eclipse.ui.commandImages">
       <image
             commandId="com.jboss.devstudio.core.central.openDevstudioHome"
-            icon="icons/ico_16_jbds.png">
+            icon="icons/16-devstudio.icon.png">
       </image>
    </extension>
 
